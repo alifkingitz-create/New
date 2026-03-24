@@ -1,15 +1,17 @@
 const music = document.getElementById("bg-music");
 const btn = document.getElementById("music-btn");
 
-/* LOAD previous state */
+/* Load previous state */
 let isPlaying = localStorage.getItem("musicPlaying") === "true";
 let time = localStorage.getItem("musicTime");
 
 if(time) music.currentTime = time;
 
-/* First user interaction e play (mobile fix) */
+/* FIRST CLICK e auto start */
 document.body.addEventListener("click", () => {
-  if (isPlaying) music.play();
+  music.play();
+  isPlaying = true;
+  localStorage.setItem("musicPlaying", "true");
 }, { once: true });
 
 /* Button control */
@@ -24,7 +26,14 @@ btn.onclick = () => {
   localStorage.setItem("musicPlaying", isPlaying);
 };
 
-/* Save time when leaving page */
+/* Page load e resume */
+window.onload = () => {
+  if(isPlaying){
+    music.play();
+  }
+};
+
+/* Save time */
 window.onbeforeunload = () => {
   localStorage.setItem("musicTime", music.currentTime);
 };
@@ -54,7 +63,6 @@ function openLetter(n){
   document.getElementById("line").innerText=text[n-1];
 }
 
-/* CLOSE popup (ONLY CLOSE, no redirect) */
 function closePopup(){
   document.getElementById("popup").style.display="none";
 }
