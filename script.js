@@ -1,54 +1,56 @@
 const music = document.getElementById("bg-music");
 const btn = document.getElementById("music-btn");
 
-/* Load previous state */
+/* Load state */
 let isPlaying = localStorage.getItem("musicPlaying") === "true";
 let time = localStorage.getItem("musicTime");
 
 if(time) music.currentTime = time;
 
-/* FIRST CLICK e auto start */
-document.body.addEventListener("click", () => {
-  music.play();
-  isPlaying = true;
-  localStorage.setItem("musicPlaying", "true");
-}, { once: true });
+/* 🔥 FORCE PLAY FUNCTION */
+function startMusic(){
+  music.play().then(()=>{
+    localStorage.setItem("musicPlaying","true");
+  }).catch(()=>{});
+}
 
-/* Button control */
+/* Button click */
 btn.onclick = () => {
   if(music.paused){
-    music.play();
-    isPlaying = true;
+    startMusic();
   } else {
     music.pause();
-    isPlaying = false;
+    localStorage.setItem("musicPlaying","false");
   }
-  localStorage.setItem("musicPlaying", isPlaying);
 };
 
 /* Page load e resume */
 window.onload = () => {
   if(isPlaying){
-    music.play();
+    startMusic();
   }
 };
 
-/* Save time */
+/* Page change er age time save */
 window.onbeforeunload = () => {
   localStorage.setItem("musicTime", music.currentTime);
 };
 
-/* Navigation */
+/* Navigation e music start add (IMPORTANT) */
 function go(page){
+  startMusic();   // 🔥 eta main fix
   window.location.href = page;
 }
 
 function back(){
+  startMusic();   // 🔥 eta main fix
   window.history.back();
 }
 
 /* Letters */
 function openLetter(n){
+  startMusic();  // 🔥 ekhaneo add
+
   let img=["img1.jpg","img2.jpg","img3.jpg","img4.jpg","img5.jpg"];
   let text=[
     "Tumi amar sobcheye special 💖",
