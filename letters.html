@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<audio id="bg-music" loop>
+  <source src="music.mp3">
+</audio>
+
+<button id="music-btn">🎵</button>
+<button class="back-btn" onclick="back()">⬅</button>
+
+<h2>Open When 💖</h2>
+
+<div class="letters">
+  <div class="letter" onclick="openLetter(1)">Sad</div>
+  <div class="letter" onclick="openLetter(2)">Miss Me</div>
+  <div class="letter" onclick="openLetter(3)">Happy</div>
+  <div class="letter" onclick="openLetter(4)">Angry</div>
+  <div class="letter" onclick="openLetter(5)">Lonely</div>
+</div>
+
+<div id="popup" class="popup">
+  <span onclick="closePopup()">⬅</span>
+  <img id="photo">
+  <p id="line"></p>
+</div>
+
+<button class="next" onclick="go('final.html')">➡</button>
+
+<script src="script.js"></script>
+</body>
+</html>
