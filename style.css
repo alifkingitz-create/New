@@ -91,3 +91,10 @@ button{
 @keyframes fall{
   to{transform:translateY(100vh);}
 }
+.close-arrow{
+  font-size:22px;
+  display:block;
+  text-align:right;
+  cursor:pointer;
+  margin-bottom:5px;
+}
