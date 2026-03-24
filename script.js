@@ -1,26 +1,44 @@
 const music = document.getElementById("bg-music");
 const btn = document.getElementById("music-btn");
 
-/* first click e music start */
-document.body.addEventListener("click", () => {
-  music.play();
-}, {once:true});
+/* LOAD previous state */
+let isPlaying = localStorage.getItem("musicPlaying") === "true";
+let time = localStorage.getItem("musicTime");
 
+if(time) music.currentTime = time;
+
+/* First user interaction e play (mobile fix) */
+document.body.addEventListener("click", () => {
+  if (isPlaying) music.play();
+}, { once: true });
+
+/* Button control */
 btn.onclick = () => {
-  if(music.paused) music.play();
-  else music.pause();
+  if(music.paused){
+    music.play();
+    isPlaying = true;
+  } else {
+    music.pause();
+    isPlaying = false;
+  }
+  localStorage.setItem("musicPlaying", isPlaying);
 };
 
-/* navigation */
+/* Save time when leaving page */
+window.onbeforeunload = () => {
+  localStorage.setItem("musicTime", music.currentTime);
+};
+
+/* Navigation */
 function go(page){
-  window.location.href=page;
+  window.location.href = page;
 }
 
 function back(){
   window.history.back();
 }
 
-/* letters */
+/* Letters */
 function openLetter(n){
   let img=["img1.jpg","img2.jpg","img3.jpg","img4.jpg","img5.jpg"];
   let text=[
@@ -36,11 +54,12 @@ function openLetter(n){
   document.getElementById("line").innerText=text[n-1];
 }
 
+/* CLOSE popup (ONLY CLOSE, no redirect) */
 function closePopup(){
   document.getElementById("popup").style.display="none";
 }
 
-/* flower rain */
+/* Flower rain */
 function createFlower(){
   const f=document.createElement("span");
   f.innerHTML="🌸";
